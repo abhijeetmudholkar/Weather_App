@@ -16,6 +16,9 @@ body {
 }
 .app-warm {
   background-image: url("../assets/images/warm.jpg");
+  background-size: cover;
+  background-position: bottom;
+  transition: 0.4 ease
 }
 
 main {
