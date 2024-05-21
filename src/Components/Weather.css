@@ -10,6 +10,58 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
 }
+/* Weather.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.4s ease;
+}
+
+.weather-app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.weather-app.warm {
+  background-image: url("../assets/images/sunny.jpg");
+}
+
+.weather-app.cloudy {
+  background-image: url("../assets/images/cloudy.jpg");
+}
+
+.weather-app.rainy {
+  background-image: url("../assets/images/rainy.jpg");
+}
+
+.weather-app.snowy {
+  background-image: url("../assets/images/snowy.jpg");
+}
+
+.weather-app.stormy {
+  background-image: url("../assets/images/stormy.jpg");
+}
+
+main {
+  width: 100%;
+  max-width: 600px;
+  padding: 25px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Rest of the CSS styles remain unchanged */
 
 /* Weather App Container */
 .weather-app {
