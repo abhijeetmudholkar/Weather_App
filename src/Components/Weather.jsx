@@ -129,7 +129,7 @@ const Weather = () => {
         {error && <div>{error}</div>}
         {showForecast ? (
           <div className="forecast-box">
-            <h2>7-Day Forecast</h2>
+            <h2>5-Day Forecast</h2>
             <div className="forecast">
               {forecast.map((item, index) => (
                 <div className="forecast-item" key={index}>

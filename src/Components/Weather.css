@@ -8,7 +8,7 @@
 /* Body Styles */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  background-color: #f5f5f58a;
 }
 /* Weather.css */
 
@@ -37,7 +37,7 @@ body {
 }
 
 .weather-app.cloudy {
-  background-image: url("../assets/images/cloudy.jpg");
+  background-image: url("../assets/images/cloudy.jfif");
 }
 
 .weather-app.rainy {
@@ -45,21 +45,21 @@ body {
 }
 
 .weather-app.snowy {
-  background-image: url("../assets/images/snowy.jpg");
+  background-image: url("../assets/images/cold.jpg");
 }
 
 .weather-app.stormy {
-  background-image: url("../assets/images/stormy.jpg");
+  background-image: url("../assets/images/storm.jpg");
 }
 
-main {
+/* main {
   width: 100%;
   max-width: 600px;
   padding: 25px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-}
+} */
 
 /* Rest of the CSS styles remain unchanged */
 
@@ -76,7 +76,7 @@ main {
   width: 90%;
   max-width: 600px;
   padding: 25px;
-  background-color: #fff;
+  background-color: #ffffff79;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
