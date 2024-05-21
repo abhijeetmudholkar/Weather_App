@@ -1,37 +1,35 @@
+/* Reset CSS */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Body Styles */
 body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
 }
 
+/* Weather App Container */
 .weather-app {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: url("../assets/images/cold.jpg");
-  background-size: cover;
-  background-position: bottom;
-  transition: background-image 0.4s ease;
 }
 
-.weather-app.warm {
-  background-image: url("../assets/images/sunny.jpg");
-}
-
+/* Main Container */
 main {
-  width: 100%;
+  width: 90%;
   max-width: 600px;
   padding: 25px;
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.75));
+  background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Search Box */
 .search-box {
   margin-bottom: 20px;
 }
@@ -40,7 +38,7 @@ main {
   width: 100%;
   padding: 15px;
   border: none;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #f5f5f5;
   border-radius: 5px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
   color: #313131;
@@ -50,52 +48,51 @@ main {
 }
 
 .search-bar:focus {
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: #e0e0e0;
 }
 
+/* Weather Container */
 .weather-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* Location Box */
 .location-box {
   margin-bottom: 20px;
   text-align: center;
 }
 
 .location {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 500;
-  color: #fff;
-  text-shadow: 2px 2px rgba(50, 50, 70, 0.5);
+  color: #313131;
 }
 
 .date {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 300;
   font-style: italic;
-  color: #fff;
-  text-shadow: 2px 2px rgba(50, 50, 70, 0.5);
+  color: #666;
 }
 
+/* Weather Box */
 .weather-box {
   margin-bottom: 20px;
   text-align: center;
 }
 
 .temp {
-  font-size: 60px;
+  font-size: 48px;
   font-weight: 900;
-  color: #fff;
-  text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
+  color: #313131;
 }
 
 .weather {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
-  color: #fff;
-  text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
+  color: #313131;
 }
 
 .details {
@@ -103,11 +100,11 @@ main {
 }
 
 .detail {
-  font-size: 16px;
-  color: #fff;
-  text-shadow: 2px 2px rgba(50, 50, 70, 0.5);
+  font-size: 14px;
+  color: #666;
 }
 
+/* Forecast Box */
 .forecast-box {
   text-align: center;
 }
@@ -124,26 +121,119 @@ main {
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #f5f5f5;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .forecast-date {
-  font-size: 16px;
+  font-size: 14px;
   color: #313131;
 }
 
 .forecast-icon {
-  font-size: 24px;
-  color: #313131;
-}
-
-.forecast-temp {
   font-size: 20px;
   color: #313131;
 }
 
-.forecast-weather {
+.forecast-temp {
   font-size: 16px;
   color: #313131;
+}
+
+.forecast-weather {
+  font-size: 14px;
+  color: #313131;
+}
+
+/* Menu Button */
+.menu-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #313131;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-button:hover {
+  background-color: #555;
+}
+/* Weather Box */
+.weather-box {
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeInDown 0.5s ease forwards;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Forecast Box */
+.forecast-box {
+  text-align: center;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Background animations based on weather */
+.app {
+  background-size: cover;
+  background-position: bottom;
+  transition: background-image 0.4s ease;
+}
+
+.app-warm {
+  background-image: url("../assets/images/sunny.jpg");
+  animation: fadeInBackground 0.5s ease forwards;
+}
+
+.app-cloudy {
+  background-image: url("../assets/images/cloudy.jpg");
+  animation: fadeInBackground 0.5s ease forwards;
+}
+
+.app-rainy {
+  background-image: url("../assets/images/rainy.jpg");
+  animation: fadeInBackground 0.5s ease forwards;
+}
+
+.app-snowy {
+  background-image: url("../assets/images/snowy.jpg");
+  animation: fadeInBackground 0.5s ease forwards;
+}
+
+.app-stormy {
+  background-image: url("../assets/images/stormy.jpg");
+  animation: fadeInBackground 0.5s ease forwards;
+}
+
+@keyframes fadeInBackground {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

@@ -8,6 +8,7 @@ const Weather = () => {
   const [forecast, setForecast] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showForecast, setShowForecast] = useState(false); // State to toggle between current weather and forecast
 
   const api = {
     key: "bbf8f01a167651a276d3de876de8172b",
@@ -19,31 +20,56 @@ const Weather = () => {
       setLoading(true);
       setError(null);
 
-      try {
-        // Get user's current position using Geolocation API
+      if (!query) {
+        // Get user's current location if query is empty
         navigator.geolocation.getCurrentPosition(async (position) => {
           const { latitude, longitude } = position.coords;
-
-          // Fetch weather data for current location
-          const response = await fetch(`${api.base}weather?lat=${latitude}&lon=${longitude}&units=metric&APPID=${api.key}`);
-          const result = await response.json();
-          setWeather(result);
-
-          // Fetch 7-day forecast for current location
-          const forecastResponse = await fetch(`${api.base}forecast?lat=${latitude}&lon=${longitude}&units=metric&APPID=${api.key}`);
-          const forecastResult = await forecastResponse.json();
-          setForecast(forecastResult.list.filter((item, index) => index % 8 === 0)); // Filter for one forecast per day
+          await fetchWeatherData(latitude, longitude);
         });
-      } catch (error) {
-        setError("Error fetching weather data. Please try again later.");
-        console.error("Error fetching weather data:", error);
-      } finally {
-        setLoading(false);
+      } else {
+        // Fetch weather data based on user's search query
+        await fetchWeatherDataByQuery(query);
       }
     };
 
     fetchData();
-  }, []); // Run effect only once when component mounts
+  }, [query]); // Run effect when query changes
+
+  const fetchWeatherData = async (latitude, longitude) => {
+    try {
+      const response = await fetch(`${api.base}weather?lat=${latitude}&lon=${longitude}&units=metric&APPID=${api.key}`);
+      const result = await response.json();
+      setWeather(result);
+
+      // Fetch 7-day forecast for current location
+      const forecastResponse = await fetch(`${api.base}forecast?lat=${latitude}&lon=${longitude}&units=metric&APPID=${api.key}`);
+      const forecastResult = await forecastResponse.json();
+      setForecast(forecastResult.list.filter((item, index) => index % 8 === 0)); // Filter for one forecast per day
+    } catch (error) {
+      setError("Error fetching weather data. Please try again later.");
+      console.error("Error fetching weather data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchWeatherDataByQuery = async (query) => {
+    try {
+      const response = await fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`);
+      const result = await response.json();
+      setWeather(result);
+
+      // Fetch 7-day forecast for the searched location
+      const forecastResponse = await fetch(`${api.base}forecast?q=${query}&units=metric&APPID=${api.key}`);
+      const forecastResult = await forecastResponse.json();
+      setForecast(forecastResult.list.filter((item, index) => index % 8 === 0)); // Filter for one forecast per day
+    } catch (error) {
+      // setError("Error fetching weather data. Please try again later.");
+      console.error("Error fetching weather data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const dateBuilder = (d) => {
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -75,6 +101,10 @@ const Weather = () => {
     }
   };
 
+  const toggleForecast = () => {
+    setShowForecast(!showForecast);
+  };
+
   return (
     <div className={`weather-app ${weather.main && weather.main.temp > 16 ? 'warm' : ''}`}>
       <main>
@@ -91,39 +121,47 @@ const Weather = () => {
               }
             }}
           />
+          <button className="menu-button" onClick={toggleForecast}>
+            {showForecast ? 'Show Current Weather' : 'Check 7-Day Forecast'}
+          </button>
         </div>
         {loading && <div>Loading...</div>}
         {error && <div>{error}</div>}
-        {weather.name && (
-          <div className="weather-container">
-            <div className="location-box">
-              <div className="location">
-                {weather.name}, {weather.sys.country}
-              </div>
-              <div className="date">{dateBuilder(new Date())}</div>
-            </div>
-            <div className="weather-box">
-              <div className="temp">{Math.round(weather.main.temp)}°C</div>
-              <div className="weather">{weather.weather[0].description}</div>
-              <div className="details">
-                <div className="detail">Humidity: {weather.main.humidity}%</div>
-                <div className="detail">Wind Speed: {weather.wind.speed} m/s</div>
-              </div>
-            </div>
-            <div className="forecast-box">
-              <h2>7-Day Forecast</h2>
-              <div className="forecast">
-                {forecast.map((item, index) => (
-                  <div className="forecast-item" key={index}>
-                    <div className="forecast-date">{dateBuilder(new Date(item.dt * 1000))}</div>
-                    <div className="forecast-icon">{getWeatherIcon(item.weather[0].main)}</div>
-                    <div className="forecast-temp">{Math.round(item.main.temp)}°C</div>
-                    <div className="forecast-weather">{item.weather[0].description}</div>
-                  </div>
-                ))}
-              </div>
+        {showForecast ? (
+          <div className="forecast-box">
+            <h2>7-Day Forecast</h2>
+            <div className="forecast">
+              {forecast.map((item, index) => (
+                <div className="forecast-item" key={index}>
+                  <div className="forecast-date">{dateBuilder(new Date(item.dt * 1000))}</div>
+                  <div className="forecast-icon">{getWeatherIcon(item.weather[0].main)}</div>
+                  <div className="forecast-temp">{Math.round(item.main.temp)}°C</div>
+                  <div className="forecast-weather">{item.weather[0].description}</div>
+                </div>
+              ))}
             </div>
           </div>
+        ) : (
+          <>
+            {weather.name && (
+              <div className="weather-container">
+                <div className="location-box">
+                  <div className="location">
+                    {weather.name}, {weather.sys.country}
+                  </div>
+                  <div className="date">{dateBuilder(new Date())}</div>
+                </div>
+                <div className="weather-box">
+                  <div className="temp">{Math.round(weather.main.temp)}°C</div>
+                  <div className="weather">{weather.weather[0].description}</div>
+                  <div className="details">
+                    <div className="detail">Humidity: {weather.main.humidity}%</div>
+                    <div className="detail">Wind Speed: {weather.wind.speed} m/s</div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </main>
     </div>
