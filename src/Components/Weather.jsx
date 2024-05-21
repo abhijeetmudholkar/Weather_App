@@ -19,20 +19,21 @@ const Weather = () => {
       setLoading(true);
       setError(null);
 
-      if (!query) {
-        setLoading(false);
-        return;
-      }
-
       try {
-        const response = await fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`);
-        const result = await response.json();
-        setWeather(result);
+        // Get user's current position using Geolocation API
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          const { latitude, longitude } = position.coords;
 
-        // Fetch 7-day forecast
-        const forecastResponse = await fetch(`${api.base}forecast?q=${query}&units=metric&APPID=${api.key}`);
-        const forecastResult = await forecastResponse.json();
-        setForecast(forecastResult.list.filter((item, index) => index % 8 === 0)); // Filter for one forecast per day
+          // Fetch weather data for current location
+          const response = await fetch(`${api.base}weather?lat=${latitude}&lon=${longitude}&units=metric&APPID=${api.key}`);
+          const result = await response.json();
+          setWeather(result);
+
+          // Fetch 7-day forecast for current location
+          const forecastResponse = await fetch(`${api.base}forecast?lat=${latitude}&lon=${longitude}&units=metric&APPID=${api.key}`);
+          const forecastResult = await forecastResponse.json();
+          setForecast(forecastResult.list.filter((item, index) => index % 8 === 0)); // Filter for one forecast per day
+        });
       } catch (error) {
         setError("Error fetching weather data. Please try again later.");
         console.error("Error fetching weather data:", error);
@@ -42,7 +43,7 @@ const Weather = () => {
     };
 
     fetchData();
-  }, [query]); // Run effect when query changes
+  }, []); // Run effect only once when component mounts
 
   const dateBuilder = (d) => {
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -73,7 +74,6 @@ const Weather = () => {
         return <TiIcons.TiWeatherPartlySunny />;
     }
   };
-  
 
   return (
     <div className={`weather-app ${weather.main && weather.main.temp > 16 ? 'warm' : ''}`}>
