@@ -122,7 +122,7 @@ const Weather = () => {
             }}
           />
           <button className="menu-button" onClick={toggleForecast}>
-            {showForecast ? 'Show Current Weather' : 'Check 7-Day Forecast'}
+            {showForecast ? 'Show Current Weather' : 'Check 5-Day Forecast'}
           </button>
         </div>
         {loading && <div>Loading...</div>}

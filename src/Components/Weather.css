@@ -8,23 +8,12 @@
 /* Body Styles */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f5f5f58a;
-}
-/* Weather.css */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-size: cover;
   background-position: center;
   transition: background-image 0.4s ease;
 }
 
+/* Weather App Container */
 .weather-app {
   display: flex;
   justify-content: center;
@@ -37,7 +26,7 @@ body {
 }
 
 .weather-app.cloudy {
-  background-image: url("../assets/images/cloudy.jfif");
+  background-image: url("../assets/images/cloudy.jpg");
 }
 
 .weather-app.rainy {
@@ -45,30 +34,11 @@ body {
 }
 
 .weather-app.snowy {
-  background-image: url("../assets/images/cold.jpg");
+  background-image: url("../assets/images/snowy.jpg");
 }
 
 .weather-app.stormy {
-  background-image: url("../assets/images/storm.jpg");
-}
-
-/* main {
-  width: 100%;
-  max-width: 600px;
-  padding: 25px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-} */
-
-/* Rest of the CSS styles remain unchanged */
-
-/* Weather App Container */
-.weather-app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  background-image: url("../assets/images/stormy.jpg");
 }
 
 /* Main Container */
@@ -133,6 +103,7 @@ main {
 .weather-box {
   margin-bottom: 20px;
   text-align: center;
+  animation: fadeInDown 0.5s ease forwards;
 }
 
 .temp {
@@ -159,6 +130,7 @@ main {
 /* Forecast Box */
 .forecast-box {
   text-align: center;
+  animation: fadeInUp 0.5s ease forwards;
 }
 
 .forecast {
@@ -214,13 +186,8 @@ main {
 .menu-button:hover {
   background-color: #555;
 }
-/* Weather Box */
-.weather-box {
-  margin-bottom: 20px;
-  text-align: center;
-  animation: fadeInDown 0.5s ease forwards;
-}
 
+/* Animations */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -230,12 +197,6 @@ main {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* Forecast Box */
-.forecast-box {
-  text-align: center;
-  animation: fadeInUp 0.5s ease forwards;
 }
 
 @keyframes fadeInUp {
